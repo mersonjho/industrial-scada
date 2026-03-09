@@ -812,6 +812,10 @@
                 flex-wrap: wrap;
                 justify-content: flex-start;
             }
+            
+            .area-cards-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
@@ -863,6 +867,16 @@
 
             .card-value {
                 font-size: 1.75rem;
+            }
+            
+            .area-cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .area-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -2127,6 +2141,11 @@
                     } else if (pageName === 'map') {
                         this.renderMap();
                     }
+                    
+                    // Schedule chart resize to ensure proper display after page load
+                    setTimeout(() => {
+                        this.scheduleChartResize();
+                    }, 100);
                 }, 200);
             }
 
@@ -2137,19 +2156,27 @@
                 const section = this.data.sections.find(s => s.name === sectionName);
                 if (!section) return;
 
-                // Hide all pages
-                document.querySelectorAll('.page').forEach(page => {
-                    page.style.display = 'none';
+                // Animate out all existing pages
+                const pages = document.querySelectorAll('.page');
+                pages.forEach(page => {
+                    page.classList.add('fade-out');
+                    page.classList.remove('fade-in');
                 });
 
-                // Create dynamic section page if not exists
-                let sectionPage = document.getElementById(`page-section-${this.sanitizeId(sectionName)}`);
-                if (!sectionPage) {
-                    sectionPage = document.createElement('div');
-                    sectionPage.id = `page-section-${this.sanitizeId(sectionName)}`;
-                    sectionPage.className = 'page';
-                    document.getElementById('mainContent').appendChild(sectionPage);
-                }
+                // After fade out, hide all pages and show selected
+                setTimeout(() => {
+                    pages.forEach(page => {
+                        page.style.display = 'none';
+                    });
+
+                    // Create dynamic section page if not exists
+                    let sectionPage = document.getElementById(`page-section-${this.sanitizeId(sectionName)}`);
+                    if (!sectionPage) {
+                        sectionPage = document.createElement('div');
+                        sectionPage.id = `page-section-${this.sanitizeId(sectionName)}`;
+                        sectionPage.className = 'page';
+                        document.getElementById('mainContent').appendChild(sectionPage);
+                    }
 
                 // Render section content
                 const today = new Date();
@@ -2287,32 +2314,40 @@
                     </div>
                 `;
 
-                sectionPage.innerHTML = html;
-                sectionPage.style.display = 'block';
+                    sectionPage.innerHTML = html;
+                    sectionPage.style.display = 'block';
+                    
+                    // Trigger fade in animation
+                    sectionPage.classList.remove('fade-out');
+                    sectionPage.classList.add('fade-in');
 
-                // Update sidebar active state
-                document.querySelectorAll('.sidebar-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-                document.querySelector(`[data-section="${sectionName}"]`)?.classList.add('active');
+                    // Update sidebar active state
+                    document.querySelectorAll('.sidebar-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    document.querySelector(`[data-section="${sectionName}"]`)?.classList.add('active');
 
-                // Render charts after page is displayed
-                setTimeout(() => {
-                    this.renderAreaRunningTimeChart(section);
-                    this.renderAreaPowerConsumptionChart(section);
-                    this.renderAreaFrequencyChart(section);
-                    this.renderSectionFaults(section);
+                    // Render charts after page is displayed
+                    setTimeout(() => {
+                        this.renderAreaRunningTimeChart(section);
+                        this.renderAreaPowerConsumptionChart(section);
+                        this.renderAreaFrequencyChart(section);
+                        this.renderSectionFaults(section);
 
-                    // Add date change listeners
-                    const dateInput = document.getElementById(`areaHistoryDate-${this.sanitizeId(sectionName)}`);
-                    if (dateInput) {
-                        dateInput.addEventListener('change', () => {
-                            this.renderAreaRunningTimeChart(section);
-                            this.renderAreaPowerConsumptionChart(section);
-                            this.renderAreaFrequencyChart(section);
-                        });
-                    }
-                }, 100);
+                        // Add date change listeners
+                        const dateInput = document.getElementById(`areaHistoryDate-${this.sanitizeId(sectionName)}`);
+                        if (dateInput) {
+                            dateInput.addEventListener('change', () => {
+                                this.renderAreaRunningTimeChart(section);
+                                this.renderAreaPowerConsumptionChart(section);
+                                this.renderAreaFrequencyChart(section);
+                            });
+                        }
+                        
+                        // Schedule chart resize to ensure proper display
+                        this.scheduleChartResize();
+                    }, 150);
+                }, 200);
             }
 
             /**
