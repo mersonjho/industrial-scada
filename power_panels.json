@@ -1,0 +1,169 @@
+{
+  "panels": [
+    {
+      "id": "EEROOM-1",
+      "name": "EEROOM 1",
+      "areas": [],
+      "dailyRecord": true,
+      "metrics": [
+        { "value": 220.3, "unit": "V", "label": "VOLTAGE 1-1 AVERAGE" },
+        { "value": 5.13, "unit": "A", "label": "CURRENT AVERAGE" },
+        { "value": 59.95, "unit": "Hz", "label": "FREQUENCY" },
+        { "value": 0.95, "unit": "-", "label": "POWER FACTOR" },
+        { "value": 366.6, "unit": "kW", "label": "ACTIVE POWER TOTAL" },
+        { "value": 292310.09, "unit": "kWh", "label": "ACTIVE ENERGY DELIVERED" }
+      ],
+      "phase": {
+        "A": {
+          "powerDemand": 125.5,
+          "energy": 310.2,
+          "voltage": 220.1,
+          "current": 5.3,
+          "thd": 3.5
+        },
+        "B": {
+          "powerDemand": 118.8,
+          "energy": 305.7,
+          "voltage": 221.2,
+          "current": 5.0,
+          "thd": 3.7
+        },
+        "C": {
+          "powerDemand": 122.3,
+          "energy": 308.9,
+          "voltage": 219.8,
+          "current": 5.1,
+          "thd": 3.6
+        }
+      },
+      "total": {
+        "powerDemand": 366.6,
+        "energy": 924.8,
+        "voltage": {
+          "lineToLine": {
+            "AB": 381.5,
+            "BC": 382.1,
+            "CA": 380.8
+          }
+        },
+        "current": {
+          "lineToLine": {
+            "AB": 7.4,
+            "BC": 7.2,
+            "CA": 7.3
+          }
+        }
+      }
+    },
+    {
+      "id": "EEROOM-2",
+      "name": "EEROOM 2",
+      "areas": [],
+      "dailyRecord": true,
+      "metrics": [
+        { "value": 221.5, "unit": "V", "label": "VOLTAGE 1-1 AVERAGE" },
+        { "value": 3.9, "unit": "A", "label": "CURRENT AVERAGE" },
+        { "value": 59.94, "unit": "Hz", "label": "FREQUENCY" },
+        { "value": 0.98, "unit": "-", "label": "POWER FACTOR" },
+        { "value": 264.3, "unit": "kW", "label": "ACTIVE POWER TOTAL" },
+        { "value": 300085.58, "unit": "kWh", "label": "ACTIVE ENERGY DELIVERED" }
+      ],
+      "phase": {
+        "A": {
+          "powerDemand": 85.2,
+          "energy": 210.5,
+          "voltage": 222.3,
+          "current": 3.8,
+          "thd": 4.2
+        },
+        "B": {
+          "powerDemand": 90.7,
+          "energy": 215.8,
+          "voltage": 220.9,
+          "current": 4.0,
+          "thd": 4.1
+        },
+        "C": {
+          "powerDemand": 88.4,
+          "energy": 212.6,
+          "voltage": 221.5,
+          "current": 3.9,
+          "thd": 4.3
+        }
+      },
+      "total": {
+        "powerDemand": 264.3,
+        "energy": 638.9,
+        "voltage": {
+          "lineToLine": {
+            "AB": 383.2,
+            "BC": 380.7,
+            "CA": 382.4
+          }
+        },
+        "current": {
+          "lineToLine": {
+            "AB": 5.4,
+            "BC": 5.6,
+            "CA": 5.5
+          }
+        }
+      }
+    },
+    {
+      "id": "MAIN-LINE",
+      "name": "MAIN LINE",
+      "areas": [],
+      "dailyRecord": true,
+      "metrics": [
+        { "value": 453.3, "unit": "V", "label": "VOLTAGE 1-1 AVERAGE" },
+        { "value": 111.7, "unit": "A", "label": "CURRENT AVERAGE" },
+        { "value": 59.96, "unit": "Hz", "label": "FREQUENCY" },
+        { "value": 0.85, "unit": "-", "label": "POWER FACTOR" },
+        { "value": 161.4, "unit": "kW", "label": "ACTIVE POWER TOTAL" },
+        { "value": 538121.25, "unit": "kWh", "label": "ACTIVE ENERGY DELIVERED" }
+      ],
+      "phase": {
+        "A": {
+          "powerDemand": 53.8,
+          "energy": 538.1,
+          "voltage": 453.3,
+          "current": 111.7,
+          "thd": 7.8
+        },
+        "B": {
+          "powerDemand": 53.8,
+          "energy": 538.1,
+          "voltage": 453.3,
+          "current": 111.7,
+          "thd": 7.8
+        },
+        "C": {
+          "powerDemand": 53.8,
+          "energy": 538.1,
+          "voltage": 453.3,
+          "current": 111.7,
+          "thd": 7.8
+        }
+      },
+      "total": {
+        "powerDemand": 161.4,
+        "energy": 1614.3,
+        "voltage": {
+          "lineToLine": {
+            "AB": 453.3,
+            "BC": 453.3,
+            "CA": 453.3
+          }
+        },
+        "current": {
+          "lineToLine": {
+            "AB": 335.1,
+            "BC": 335.1,
+            "CA": 335.1
+          }
+        }
+      }
+    }
+  ]
+}

@@ -407,16 +407,26 @@
         }
 
         /* ============================================ */
-        /* DASHBOARD GRID */
-        /* ============================================ */
         .dashboard-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: var(--space-sm);
+            gap: 1.5rem;
             margin-bottom: var(--space-md);
             overflow-x: visible;
             padding-bottom: var(--space-xs);
             width: 100%;
+            justify-content: center;
+        }
+
+        .dashboard-grid > * {
+            flex: 1 1 300px;
+            max-width: 500px;
+        }
+
+        #powerPanelsGrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            place-items: center;
         }
 
         .card {
@@ -621,7 +631,8 @@
             background-color: var(--color-card);
             border: 1px solid var(--color-border);
             border-radius: 0.75rem;
-            overflow: hidden;
+            width: -webkit-fill-available;
+            overflow-x: auto;
         }
 
         .table-header {
@@ -669,6 +680,651 @@
 
         .table-row-highlight {
             background-color: rgba(59, 130, 246, 0.05);
+        }
+
+        .area-summary-panel {
+            margin-bottom: var(--space-xl);
+            border-radius: 1rem;
+            border: 1px solid rgba(59, 130, 246, 0.28);
+            background:
+                radial-gradient(circle at top right, rgba(59, 130, 246, 0.15), transparent 52%),
+                linear-gradient(180deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.95));
+            box-shadow: 0 12px 32px rgba(2, 6, 23, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            overflow: hidden;
+        }
+
+        .area-summary-panel .table-header {
+            justify-content: flex-start;
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.2), rgba(14, 165, 233, 0.12));
+        }
+
+        .area-summary-content {
+            overflow-x: auto;
+        }
+
+        .area-summary-table {
+            width: 100%;
+            min-width: 760px;
+            border-collapse: collapse;
+        }
+
+        .area-summary-table th,
+        .area-summary-table td {
+            padding: 0.75rem 0.9rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+            vertical-align: top;
+        }
+
+        .area-summary-table th {
+            width: 260px;
+            text-transform: uppercase;
+            font-size: 0.68rem;
+            letter-spacing: 0.06em;
+            color: var(--color-text-secondary);
+            background: rgba(15, 23, 42, 0.44);
+            text-align: left;
+        }
+
+        .area-summary-table td {
+            color: var(--color-text);
+            font-size: 0.88rem;
+        }
+
+        .area-summary-table tbody tr {
+            opacity: 0;
+            transform: translateY(8px);
+            animation: areaSummaryRowIn 0.42s ease forwards;
+        }
+
+        .area-summary-table tbody tr:nth-child(1) { animation-delay: 0.03s; }
+        .area-summary-table tbody tr:nth-child(2) { animation-delay: 0.08s; }
+        .area-summary-table tbody tr:nth-child(3) { animation-delay: 0.13s; }
+        .area-summary-table tbody tr:nth-child(4) { animation-delay: 0.18s; }
+        .area-summary-table tbody tr:nth-child(5) { animation-delay: 0.23s; }
+        .area-summary-table tbody tr:nth-child(6) { animation-delay: 0.28s; }
+        .area-summary-table tbody tr:nth-child(7) { animation-delay: 0.33s; }
+        .area-summary-table tbody tr:nth-child(8) { animation-delay: 0.38s; }
+        .area-summary-table tbody tr:nth-child(9) { animation-delay: 0.43s; }
+        .area-summary-table tbody tr:nth-child(10) { animation-delay: 0.48s; }
+
+        .area-summary-table tbody tr:hover {
+            background-color: rgba(59, 130, 246, 0.08);
+        }
+
+        /* Area Performance Table Styles */
+        #areaPerformanceTable {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #areaPerformanceTable th,
+        #areaPerformanceTable td {
+            padding: var(--space-md);
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        #areaPerformanceTable th {
+            background-color: var(--color-surface);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-text-secondary);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .area-summary-table-row {
+            animation: areaSummaryRowIn 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        /* power panel rows animation */
+        #powerPanelTable tbody tr {
+            animation: areaSummaryRowIn 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        /* Power panel card styles */
+        .panel-card {
+            background: linear-gradient(135deg, rgba(51, 65, 85, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            border: 2px solid rgba(100, 120, 140, 0.6);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            flex: 1 1 auto;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: panelCardFadeIn 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .panel-card:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3), 0 0 20px rgba(14, 165, 233, 0.2);
+            transform: translateY(-4px) scale(1.02);
+        }
+        .panel-card-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .panel-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        .panel-areas {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            display: none;
+        }
+
+        .phase-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin: 0.5rem 0;
+        }
+        .metric-box {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(17, 24, 39, 0.95) 100%);
+            border: 1px solid rgba(75, 85, 99, 0.8);
+            border-radius: 0.5rem;
+            padding: 0.75rem 0.5rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            animation: metricBoxSlideIn 0.5s ease forwards;
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+        .metric-box:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+        .metric-box .value-unit {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 0.25rem;
+            width: 100%;
+        }
+        .metric-box .value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #4ade80;
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+        .metric-box:hover .value {
+            color: #22d3ee;
+        }
+        .metric-box .unit {
+            font-size: 0.7rem;
+            color: #4ade80;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .metric-box:hover .unit {
+            color: #22d3ee;
+        }
+        .metric-box .label {
+            width: 100%;
+            background: linear-gradient(90deg, #fb923c 0%, #f97316 100%);
+            color: #1a1a1a;
+            font-size: 0.55rem;
+            font-weight: 700;
+            padding: 0.35rem 0.25rem;
+            text-align: center;
+            border-radius: 0 0 0.4rem 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin: 0 -0.5rem -0.75rem -0.5rem;
+            line-height: 1.2;
+            transition: background 0.3s ease;
+        }
+        .metric-box:hover .label {
+            background: linear-gradient(90deg, #f97316 0%, #ea580c 100%);
+        }
+
+        .phase-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin: 0.25rem 0;
+        }
+        .metric-box {
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid rgba(75, 85, 99, 0.8);
+            border-radius: 0.4rem;
+            padding: 0.65rem 0.5rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .metric-box .value-unit {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 0.25rem;
+            width: 100%;
+        }
+        .metric-box .value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #4ade80;
+            line-height: 1;
+        }
+        .metric-box .unit {
+            font-size: 0.7rem;
+            color: #4ade80;
+            font-weight: 600;
+        }
+        .metric-box .label {
+            width: 100%;
+            background: #fb923c;
+            color: #1a1a1a;
+            font-size: 0.55rem;
+            font-weight: 700;
+            padding: 0.3rem 0.25rem;
+            text-align: center;
+            border-radius: 0 0 0.3rem 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin: 0 -0.5rem -0.65rem -0.5rem;
+            line-height: 1.2;
+        }
+        .panel-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+        .panel-metric {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        .panel-metric .label {
+            color: var(--color-text-secondary);
+        }
+        
+
+        .panel-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+        .panel-table th,
+        .panel-table td {
+            padding: 0.5rem 0.25rem;
+            text-align: center;
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        .panel-table th {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--color-primary);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .panel-table td {
+            background: rgba(30, 41, 59, 0.5);
+            color: var(--color-text);
+        }
+        .panel-table tbody tr:nth-child(even) {
+            background: rgba(17, 24, 39, 0.3);
+        }
+        .panel-table tbody tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+            font-weight: 600;
+            color: var(--color-primary);
+            min-width: 120px;
+        }
+
+        .equipment-names-cell {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--color-text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .status-cell {
+            min-width: 180px;
+        }
+
+        .status-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-pill.online {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: var(--color-success);
+        }
+
+        .status-pill.offline {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--color-danger);
+        }
+
+        .status-pill.fault {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--color-warning);
+        }
+
+        .status-pill.idle {
+            background-color: rgba(156, 163, 175, 0.1);
+            color: var(--color-text-secondary);
+        }
+
+        .running-time-cell,
+        .power-cell,
+        .peak-demand-cell,
+        .current-cell,
+        .voltage-cell,
+        .frequency-cell,
+        .downtime-cell {
+            text-align: right;
+            font-family: var(--font-mono);
+            font-weight: 500;
+        }
+
+        .utilization-cell {
+            min-width: 100px;
+        }
+
+        .utilization-bar {
+            position: relative;
+            height: 1.5rem;
+            background-color: var(--color-border);
+            border-radius: 0.25rem;
+            overflow: hidden;
+        }
+
+        .utilization-fill {
+            height: 100%;
+            background-color: var(--color-primary);
+            transition: width 0.8s ease;
+        }
+
+        .utilization-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .area-summary-eq-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .area-summary-eq-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.22rem 0.5rem;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.32);
+            color: #bfdbfe;
+            white-space: nowrap;
+        }
+
+        .area-summary-status {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .area-summary-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.2rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.73rem;
+            font-weight: 700;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .area-summary-status-pill.online {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: rgba(34, 197, 94, 0.38);
+            color: #86efac;
+        }
+
+        .area-summary-status-pill.offline {
+            background: rgba(100, 116, 139, 0.25);
+            border-color: rgba(148, 163, 184, 0.32);
+            color: #cbd5e1;
+        }
+
+        .area-summary-status-pill.fault {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.35);
+            color: #fca5a5;
+        }
+
+        .area-summary-status-pill.idle {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: rgba(245, 158, 11, 0.36);
+            color: #fcd34d;
+        }
+
+        .area-summary-metric {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+
+        .area-summary-note {
+            margin-top: 0.2rem;
+            font-size: 0.72rem;
+            color: var(--color-text-secondary);
+        }
+
+        @keyframes areaSummaryRowIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #page-equipment {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: var(--space-md);
+        }
+
+        #page-equipment .page-header {
+            width: -webkit-fill-available;
+            margin: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-md);
+            flex-wrap: nowrap;
+        }
+
+        #page-equipment .equipment-header-text {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            min-width: 0;
+            flex-wrap: wrap;
+        }
+
+        #page-equipment .page-title,
+        #page-equipment .page-subtitle {
+            margin: 0;
+            text-align: left;
+        }
+
+        #page-equipment .page-subtitle {
+            max-width: 760px;
+        }
+
+        #page-equipment .controls-bar {
+            width: fit-content;
+            max-width: -webkit-fill-available;
+            margin: 0 0 0 auto;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: flex-end;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: 0;
+            border: none;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        #page-equipment .search-box {
+            flex: 0 0 auto;
+            width: min(420px, 42vw);
+            min-width: 260px;
+            max-width: 420px;
+        }
+
+        #page-equipment .filter-select {
+            flex: 0 0 auto;
+            min-width: 180px;
+            width: 220px;
+        }
+
+        #page-equipment .table-container {
+            width: -webkit-fill-available;
+            margin: 10px;
+            overflow-x: auto;
+            border-radius: 1rem;
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.74), rgba(15, 23, 42, 0.95));
+            box-shadow: 0 14px 36px rgba(2, 6, 23, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+
+        #page-equipment .table-header {
+            justify-content: left;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.18), rgba(14, 165, 233, 0.12));
+        }
+
+        #equipmentTable {
+            width: max-content;
+            min-width: 100%;
+        }
+
+        #page-equipment th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: rgba(15, 23, 42, 0.96);
+        }
+
+        #page-equipment th,
+        #page-equipment td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        #page-equipment .equipment-name-cell,
+        #page-equipment .downtime-cell {
+            text-align:center;
+        }
+
+        #page-equipment tbody tr:nth-child(even) {
+            background-color: rgba(148, 163, 184, 0.04);
+        }
+
+        #page-equipment tbody tr:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .metric-cell {
+            font-family: var(--font-mono);
+            white-space: nowrap;
+        }
+
+        .equipment-name-cell {
+            min-width: 180px;
+        }
+
+        .downtime-cell {
+            min-width: 220px;
+            font-size: 0.85rem;
+            line-height: 1.35;
+        }
+
+        .downtime-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .downtime-total {
+            color: var(--color-warning);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .downtime-history-btn {
+            padding: 0.35rem 0.65rem !important;
+            font-size: 0.72rem;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(14, 165, 233, 0.22));
+            color: #dbeafe;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .downtime-history-btn:hover {
+            transform: translateY(-1px);
+            border-color: rgba(14, 165, 233, 0.7);
+            box-shadow: 0 6px 14px rgba(14, 165, 233, 0.25);
         }
 
         /* ============================================ */
@@ -818,13 +1474,56 @@
                 --sidebar-width: 200px;
             }
 
-            .dashboard-grid {
-                flex-wrap: wrap;
-                justify-content: flex-start;
+            .dashboard-grid > * {
+                flex: 1 1 250px;
+                max-width: 400px;
+            }
+
+            #powerPanelsGrid {
+                grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            
+                gap:1rem;
             }
             
             .area-cards-grid {
                 grid-template-columns: repeat(auto-fill, minmax(clamp(140px, 18%, 200px), 1fr));
+            }
+
+            #page-equipment .page-header {
+                flex-wrap: wrap;
+                margin: 10px;
+            }
+
+            #page-equipment .controls-bar {
+                width: 100%;
+                margin-left: 20px;
+                justify-content: flex-start;
+            }
+
+            #page-equipment .search-box {
+                flex: 1 1 auto;
+                width: auto;
+                min-width: 220px;
+                max-width: none;
+            }
+
+            #page-equipment .table-container {
+                border-radius: 0.85rem;
+            }
+
+            /* Area Performance Table Responsive */
+            #areaPerformanceTable th,
+            #areaPerformanceTable td {
+                padding: var(--space-sm);
+                font-size: 0.8rem;
+            }
+
+            .equipment-names-cell {
+                max-width: 150px;
+            }
+
+            .status-cell {
+                min-width: 140px;
             }
         }
 
@@ -854,13 +1553,18 @@
                 display: block;
             }
 
-            .main-content {
-                padding: var(--space-md);
+            .dashboard-grid {
+                gap: 0.5rem;
             }
 
-            .dashboard-grid {
-                flex-wrap: wrap;
-                justify-content: flex-start;
+            .dashboard-grid > * {
+                flex: 1 1 200px;
+                max-width: 300px;
+            }
+
+            #powerPanelsGrid {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
             }
 
             .controls-bar {
@@ -879,14 +1583,122 @@
                 font-size: 1.75rem;
             }
             
+            /* Area Performance Table Mobile */
+            #areaPerformanceTable {
+                font-size: 0.75rem;
+            }
+
+            #areaPerformanceTable th,
+            #areaPerformanceTable td {
+                padding: var(--space-xs);
+            }
+
+            .equipment-names-cell {
+                max-width: 100px;
+            }
+
+            .status-summary {
+                flex-direction: column;
+                gap: 0.15rem;
+            }
+
+            .status-pill {
+                font-size: 0.7rem;
+                padding: 0.15rem 0.3rem;
+            }
+
+            .utilization-bar {
+                height: 1.2rem;
+            }
+
+            .utilization-text {
+                font-size: 0.7rem;
+            }
+            
             .area-cards-grid {
                 grid-template-columns: repeat(auto-fill, minmax(clamp(130px, 25%, 180px), 1fr));
+            }
+
+            .dashboard-grid > * {
+                flex: 1 1 150px;
+                max-width: 250px;
+            }
+
+            #powerPanelsGrid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            #page-equipment {
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-md);
+                align-items: stretch;
+            }
+
+            #page-equipment .page-header,
+            #page-equipment .controls-bar,
+            #page-equipment .table-container {
+                width: -webkit-fill-available;
+            }
+
+            #page-equipment .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            #page-equipment .equipment-header-text {
+                width: 100%;
+            }
+
+            #page-equipment .controls-bar {
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--space-sm);
+                margin: 0;
+                justify-content: flex-start;
+                padding: 0;
+            }
+
+            #page-equipment .search-box,
+            #page-equipment .filter-select {
+                min-width: 0;
+                max-width: none;
+                width: auto;
+            }
+
+            #page-equipment .search-box {
+                flex: 1 1 100%;
+                width: 100%;
+            }
+
+            #page-equipment .table-header {
+                justify-content: flex-start;
             }
         }
         
         @media (max-width: 480px) {
             .area-cards-grid {
                 grid-template-columns: repeat(auto-fill, minmax(clamp(120px, 40%, 160px), 1fr));
+            }
+
+            #page-equipment .page-header {
+                text-align: left;
+                align-items: flex-start;
+            }
+
+            #page-equipment .filter-select {
+                width: 100%;
+            }
+
+            #page-equipment td,
+            #page-equipment th {
+                font-size: 0.78rem;
             }
         }
 
@@ -931,6 +1743,28 @@
             }
             50% {
                 opacity: 0.5;
+            }
+        }
+
+        @keyframes panelCardFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes metricBoxSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
             }
         }
 
@@ -1531,6 +2365,10 @@
                     <i class="fas fa-map-marked-alt"></i>
                     <span>Map</span>
                 </div>
+                <div class="sidebar-item" data-page="powerpanels">
+                    <i class="fas fa-bolt"></i>
+                    <span>Power Panels</span>
+                </div>
             </div>
             <div class="sidebar-section" id="sectionsNav"></div>
         </aside>
@@ -1564,10 +2402,33 @@
                 <!-- KPI Cards -->
                 <div class="dashboard-grid" id="kpiCards"></div>
 
-                <!-- Area Performance Cards -->
+                <!-- Area Performance Table -->
                 <div class="area-performance-section">
                     <h3 style="margin-bottom: var(--space-md); font-size: 0.95rem; font-weight: 600;">Area Performance Metrics</h3>
-                    <div class="area-cards-grid" id="areaPerformanceCards"></div>
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h4 style="margin: 0; font-size: 0.9rem; font-weight: 600;">Area Summary</h4>
+                        </div>
+                        <table id="areaPerformanceTable">
+                            <thead>
+                                <tr>
+                                    <th>Area</th>
+                                    <th>Equipment</th>
+                                    <th>Status</th>
+                                    <th>Running Time (Max)</th>
+                                    <th>Utilization</th>
+                                    <th>Power Cons.</th>
+                                    <th>Peak Demand</th>
+                                    <th>Current</th>
+                                    <th>Voltage</th>
+                                    <th>Frequency</th>
+                                    <th>Downtime</th>
+                                </tr>
+                            </thead>
+                            <tbody id="areaPerformanceTableBody">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <!-- Quick Filters -->
@@ -1614,7 +2475,7 @@
                     </div>
                 </div>
 
-                <!-- Charts Row 2 - Donut Charts -->
+                <!-- Charts Row 2 - Pie Charts -->
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: var(--space-md); margin-bottom: var(--space-lg); width: 100%; min-width: 0; overflow: hidden;">
                     <div class="chart-container">
                         <div class="chart-title">
@@ -1622,7 +2483,7 @@
                             Power Consumption Rate by Area
                         </div>
                         <div class="chart-wrapper">
-                            <canvas id="powerRateDonutChart"></canvas>
+                            <canvas id="powerRatePieChart"></canvas>
                         </div>
                     </div>
 
@@ -1632,7 +2493,27 @@
                             Utilization Rate by Area
                         </div>
                         <div class="chart-wrapper">
-                            <canvas id="utilizationDonutChart"></canvas>
+                            <canvas id="utilizationPieChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-title">
+                            <i class="fas fa-chart-pie"></i>
+                            Downtime Rate by Area
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="downtimePieChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-title">
+                            <i class="fas fa-chart-pie"></i>
+                            Peak Demand Rate by Area
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="peakDemandPieChart"></canvas>
                         </div>
                     </div>
 
@@ -1698,27 +2579,36 @@
 
             </div>
 
+            <!-- Power Panels Page -->
+            <div id="page-powerpanels" class="page" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">Power Panels</h1>
+                    <p class="page-subtitle">Live panel metrics with phase breakdowns</p>
+                </div>
+
+                <!-- cards container -->
+                <div class="dashboard-grid" id="powerPanelsGrid"></div>
+            </div>
+
             <!-- Equipment Page -->
             <div id="page-equipment" class="page" style="display: none;">
                 <div class="page-header">
-                    <h1 class="page-title">Equipment Management</h1>
-                    <p class="page-subtitle">Detailed view of all equipment and VFD systems</p>
-                </div>
-
-                <div class="controls-bar">
-                    <div class="search-box">
-                        <input 
-                            type="text" 
-                            id="equipmentSearch" 
-                            placeholder="Search by equipment ID, name, or model..."
-                        >
+                    <div class="equipment-header-text">
+                        <h1 class="page-title">Equipment Management</h1>
+                        <p class="page-subtitle">Detailed view of all equipment and VFD systems</p>
                     </div>
-                    <select class="filter-select" id="equipmentAreaFilter">
-                        <option value="">All Areas</option>
-                    </select>
-                    <button class="btn" id="exportBtn">
-                        <i class="fas fa-download"></i> Export Data
-                    </button>
+                    <div class="controls-bar">
+                        <div class="search-box">
+                            <input 
+                                type="text" 
+                                id="equipmentSearch" 
+                                placeholder="Search by equipment ID, name, or model..."
+                            >
+                        </div>
+                        <select class="filter-select" id="equipmentAreaFilter">
+                            <option value="">All Areas</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="table-container">
@@ -1729,15 +2619,17 @@
                     <table id="equipmentTable">
                         <thead>
                             <tr>
-                                <th>Equipment ID</th>
-                                <th>Name</th>
-                                <th>Power Rating</th>
+                                <th>Equipment Name</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Running Time</th>
+                                <th>Utilization Rate</th>
+                                <th>Power Consumption</th>
+                                <th>Peak Demand</th>
+                                <th>Current</th>
                                 <th>Voltage</th>
-                                <th>VFD Model</th>
-                                <th>Area</th>
-                                <th>Running State</th>
-                                <th>Device Connection</th>
-                                <th>Fault Status</th>
+                                <th>Frequency</th>
+                                <th>Downtime</th>
                                 <th>Details</th>
                             </tr>
                         </thead>
@@ -1829,6 +2721,8 @@
                 this.sidebarTransitioning = false;
                 this.sidebarTransitionTimeout = null;
                 this.machineVisible = true;
+                this.activeDateRangeSource = 'overview';
+                this.powerPanels = null;
                 this.init();
             }
 
@@ -1912,6 +2806,15 @@
                     const response = await fetch('scada_data.json');
                     this.data = await response.json();
                     this.filteredData = JSON.parse(JSON.stringify(this.data));
+
+                    // load panel data
+                    try {
+                        const panelResp = await fetch('power_panels.json');
+                        this.powerPanels = await panelResp.json();
+                    } catch (err) {
+                        console.warn('Power panels file not found or error loading', err);
+                        this.powerPanels = { panels: [] };
+                    }
                     console.log('Data loaded successfully:', this.data);
                 } catch (error) {
                     console.error('Error loading data:', error);
@@ -1964,16 +2867,15 @@
                     equipmentAreaFilter.addEventListener('change', () => this.filterEquipment());
                 }
 
-                // Export button
-                const exportBtn = document.getElementById('exportBtn');
-                if (exportBtn) {
-                    exportBtn.addEventListener('click', () => this.exportData());
-                }
-
                 // Update Analytics buttons
                 const overviewUpdateBtn = document.getElementById('overviewUpdateBtn');
                 if (overviewUpdateBtn) {
                     overviewUpdateBtn.addEventListener('click', () => this.updateAnalyticsOverview());
+                }
+
+                const analyticsUpdateBtn = document.getElementById('analyticsUpdateBtn');
+                if (analyticsUpdateBtn) {
+                    analyticsUpdateBtn.addEventListener('click', () => this.updateAnalyticsPage());
                 }
 
                 // Fullscreen button
@@ -2173,6 +3075,8 @@
                         this.renderEquipment();
                     } else if (pageName === 'map') {
                         this.renderMap();
+                    } else if (pageName === 'powerpanels') {
+                        this.renderPowerPanels();
                     }
                     
                     // Schedule chart resize to ensure proper display after page load
@@ -2256,9 +3160,20 @@
                         </div>
                     </div>
 
-                    <div style="background-color: var(--color-card); border: 2px solid var(--color-border); border-left: 4px solid var(--color-warning); border-radius: 0.75rem; padding: var(--space-lg); margin-bottom: var(--space-xl);">
-                        <label style="font-weight: 600; color: var(--color-text-secondary); text-transform: uppercase; font-size: 0.75rem; display: block; margin-bottom: var(--space-md);">Select Date for Area History</label>
-                        <input type="date" id="areaHistoryDate-${this.sanitizeId(sectionName)}" class="date-input" value="${formatDate(today)}" style="width: 100%; max-width: 200px;">
+                    <div class="analytics-controls" style="margin-bottom: var(--space-xl);">
+                        <div class="date-range-section">
+                            <div class="date-input-group">
+                                <label for="areaFromDate-${this.sanitizeId(sectionName)}">From Date</label>
+                                <input type="date" id="areaFromDate-${this.sanitizeId(sectionName)}" class="date-input" value="${formatDate(today)}">
+                            </div>
+                            <div class="date-input-group">
+                                <label for="areaToDate-${this.sanitizeId(sectionName)}">To Date</label>
+                                <input type="date" id="areaToDate-${this.sanitizeId(sectionName)}" class="date-input" value="${formatDate(today)}">
+                            </div>
+                            <button class="btn btn-update" id="areaUpdateBtn-${this.sanitizeId(sectionName)}">
+                                <i class="fas fa-sync-alt"></i> Update History
+                            </button>
+                        </div>
                     </div>
 
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: var(--space-lg); margin-bottom: var(--space-xl); width: 100%;">
@@ -2368,13 +3283,24 @@
                         this.renderSectionFaults(section);
 
                         // Add date change listeners
-                        const dateInput = document.getElementById(`areaHistoryDate-${this.sanitizeId(sectionName)}`);
-                        if (dateInput) {
-                            dateInput.addEventListener('change', () => {
-                                this.renderAreaRunningTimeChart(section);
-                                this.renderAreaPowerConsumptionChart(section);
-                                this.renderAreaFrequencyChart(section);
-                            });
+                        const fromDateInput = document.getElementById(`areaFromDate-${this.sanitizeId(sectionName)}`);
+                        const toDateInput = document.getElementById(`areaToDate-${this.sanitizeId(sectionName)}`);
+                        const updateBtn = document.getElementById(`areaUpdateBtn-${this.sanitizeId(sectionName)}`);
+                        
+                        const updateCharts = () => {
+                            this.renderAreaRunningTimeChart(section);
+                            this.renderAreaPowerConsumptionChart(section);
+                            this.renderAreaFrequencyChart(section);
+                        };
+                        
+                        if (fromDateInput) {
+                            fromDateInput.addEventListener('change', updateCharts);
+                        }
+                        if (toDateInput) {
+                            toDateInput.addEventListener('change', updateCharts);
+                        }
+                        if (updateBtn) {
+                            updateBtn.addEventListener('click', updateCharts);
                         }
                         
                         // Schedule chart resize to ensure proper display
@@ -2384,8 +3310,16 @@
             }
 
             /**
-             * Render area running time chart
+             * Update area history charts
              */
+            updateAreaHistory(sectionName) {
+                const section = this.filteredData.sections.find(s => s.name === sectionName);
+                if (section) {
+                    this.renderAreaRunningTimeChart(section);
+                    this.renderAreaPowerConsumptionChart(section);
+                    this.renderAreaFrequencyChart(section);
+                }
+            }
             renderAreaRunningTimeChart(section) {
                 const canvasId = `areaRunningTimeChart-${this.sanitizeId(section.name)}`;
                 const canvas = document.getElementById(canvasId);
@@ -2569,7 +3503,7 @@
              * Render overview page
              */
             renderOverview() {
-                this.renderAreaPerformance('areaPerformanceCards');
+                this.renderAreaPerformance('areaPerformanceTableBody');
                 this.renderKPICards();
                 this.populateFilters();
                 this.renderCharts();
@@ -2651,26 +3585,55 @@
 
                 this.data.sections.forEach(section => {
                     const machineCount = section.equipment.length;
+                    const equipmentNames = section.equipment.map(eq => eq.equipment_name).join(', ');
+
+                    // Simulate status counts
+                    const totalMachines = section.equipment.length;
+                    const online = Math.floor(totalMachines * (0.7 + Math.random() * 0.2)); // 70-90% online
+                    const idle = Math.floor(totalMachines * (0.05 + Math.random() * 0.1)); // 5-15% idle
+                    const fault = Math.floor(totalMachines * (0.02 + Math.random() * 0.05)); // 2-7% fault
+                    const offline = totalMachines - online - idle - fault;
+
+                    // Calculate totals
                     const totalPower = section.equipment.reduce((sum, eq) => sum + (parseFloat(eq.power_rating) || 0), 0);
+                    const totalCurrent = section.equipment.reduce((sum, eq) => {
+                        // Simulate current based on power and voltage
+                        const power = parseFloat(eq.power_rating) || 0;
+                        const voltage = 220; // Assume 220V
+                        return sum + (power * 746 / voltage); // I = P / V, but with HP to W conversion
+                    }, 0);
+                    const totalVoltage = 220 * totalMachines; // Assume 220V each
+                    const totalFrequency = 50 * totalMachines; // Assume 50Hz each
 
                     // Simulate power consumption based on power rating
-                    // Formula: Power (kWh) = (Total Power HP * 24 hours * 0.746 kW/HP * efficiency factor)
                     const basePowerConsumption = totalPower * 24 * 0.746;
-                    const variabilityFactor = 0.75 + Math.random() * 0.25; // 75-100% utilization
-                    const powerConsumption = (basePowerConsumption * variabilityFactor).toFixed(1);
+                    const variabilityFactor = 0.75 + Math.random() * 0.25;
+                    const powerConsumption = basePowerConsumption * variabilityFactor;
 
-                    // Simulate running time (hours per month)
-                    const baseRunningTime = 30 * 24; // 720 hours per month
-                    const runningTimeVariability = 0.6 + Math.random() * 0.4; // 60-100%
-                    const runningTime = Math.round(baseRunningTime * runningTimeVariability);
+                    // Simulate peak demand (slightly higher than average)
+                    const peakDemand = powerConsumption * (1.1 + Math.random() * 0.2);
 
-                    // Calculate utilization rate
-                    const utilizationRate = Math.round((runningTime / baseRunningTime) * 100);
+                    // Simulate running times for each equipment and find the longest
+                    const runningTimes = section.equipment.map(() => Math.random() * 8); // 0-8 hours
+                    const longestRunningTime = Math.max(...runningTimes);
+
+                    // Calculate utilization rate (longest running time / 8 hours * 100%)
+                    const utilizationRate = Math.round((longestRunningTime / 8) * 100);
+
+                    // Simulate downtime (8 hours max minus longest running)
+                    const downtime = Math.max(0, 8 - longestRunningTime);
 
                     performanceData[section.name] = {
-                        powerConsumption,
-                        runningTime,
+                        equipmentNames,
+                        status: { online, offline, fault, idle },
+                        runningTime: Math.round(longestRunningTime * 10) / 10, // Round to 1 decimal
                         utilizationRate,
+                        powerConsumption: Math.round(powerConsumption),
+                        peakDemand: Math.round(peakDemand),
+                        current: Math.round(totalCurrent),
+                        voltage: Math.round(totalVoltage),
+                        frequency: Math.round(totalFrequency),
+                        downtime: Math.round(downtime * 10) / 10,
                         machineCount
                     };
                 });
@@ -2688,65 +3651,160 @@
                 const performanceData = this.generateAreaPerformanceData();
 
                 let html = '';
+                let delay = 0;
                 this.data.sections.forEach(section => {
                     const data = performanceData[section.name];
                     html += `
-                        <div class="area-card">
-                            <div class="area-card-header">
-                                <div class="area-card-title">${section.name}</div>
-                                <div class="machine-count-badge">
-                                    <i class="fas fa-microchip"></i> ${data.machineCount}
+                        <tr class="area-summary-table-row" style="animation-delay: ${delay}s;">
+                            <td class="area-name-cell">${section.name}</td>
+                            <td class="equipment-names-cell" title="${data.equipmentNames}">${data.equipmentNames.length > 50 ? data.equipmentNames.substring(0, 50) + '...' : data.equipmentNames}</td>
+                            <td class="status-cell">
+                                <div class="status-summary">
+                                    <span class="status-pill online">${data.status.online} Online</span>
+                                    <span class="status-pill offline">${data.status.offline} Offline</span>
+                                    <span class="status-pill fault">${data.status.fault} Fault</span>
+                                    <span class="status-pill idle">${data.status.idle} Idle</span>
                                 </div>
-                            </div>
-
-                            <div class="area-card-content">
-                                <div class="area-card-metric power">
-                                    <div class="metric-row">
-                                        <span class="metric-value">${Math.round(data.powerConsumption)}</span>
-                                        <span class="metric-unit">kWh</span>
-                                    </div>
-                                    <div class="metric-label">
-                                        <i class="fas fa-bolt"></i>
-                                        Power
-                                    </div>
+                            </td>
+                            <td class="running-time-cell">${data.runningTime} hrs</td>
+                            <td class="utilization-cell">
+                                <div class="utilization-bar">
+                                    <div class="utilization-fill" style="width: ${data.utilizationRate}%"></div>
+                                    <span class="utilization-text">${data.utilizationRate}%</span>
                                 </div>
-
-                                <div class="area-card-metric time">
-                                    <div class="metric-row">
-                                        <span class="metric-value">${data.runningTime}</span>
-                                        <span class="metric-unit">hrs</span>
-                                    </div>
-                                    <div class="metric-label">
-                                        <i class="fas fa-clock"></i>
-                                        Time
-                                    </div>
-                                </div>
-
-                                <div class="area-card-metric utilization">
-                                    <div class="metric-row">
-                                        <div class="utilization-gauge" data-value="${data.utilizationRate}%" style="--utilization-value: ${data.utilizationRate}"></div>
-                                    </div>
-                                    <div class="metric-label">
-                                        <i class="fas fa-gauge-high"></i>
-                                        Util.
-                                    </div>
-                                </div>
-
-                                <div class="area-card-metric machines">
-                                    <div class="metric-row">
-                                        <span class="metric-value">0</span>
-                                    </div>
-                                    <div class="metric-label">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                        Issues
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            </td>
+                            <td class="power-cell">${data.powerConsumption} kWh</td>
+                            <td class="peak-demand-cell">${data.peakDemand} kW</td>
+                            <td class="current-cell">${data.current} A</td>
+                            <td class="voltage-cell">${data.voltage} V</td>
+                            <td class="frequency-cell">${data.frequency} Hz</td>
+                            <td class="downtime-cell">${data.downtime} hrs</td>
+                        </tr>
                     `;
+                    delay += 0.1;
                 });
 
                 container.innerHTML = html;
+            }
+
+            /**
+             * Render power panels cards with mini‑charts
+             */
+            renderPowerPanels() {
+                const grid = document.getElementById('powerPanelsGrid');
+                if (!grid || !this.powerPanels) return;
+
+                grid.innerHTML = '';
+                let cardDelay = 0;
+                this.powerPanels.panels.forEach(panel => {
+                    const card = document.createElement('div');
+                    card.className = 'panel-card';
+                    card.style.animationDelay = `${cardDelay}s`;
+
+                    // header with title only
+                    const header = document.createElement('div');
+                    header.className = 'panel-card-header';
+                    header.innerHTML = `<div class="panel-title">${panel.name}</div>`;
+                    card.appendChild(header);
+
+                    // metric boxes grid (previous design)
+                    const metricsGrid = document.createElement('div');
+                    metricsGrid.className = 'phase-display';
+                    
+                    // render metrics from the panel data with staggered animations
+                    if (panel.metrics && Array.isArray(panel.metrics)) {
+                        let boxDelay = 0;
+                        panel.metrics.forEach(metric => {
+                            const box = document.createElement('div');
+                            box.className = 'metric-box';
+                            box.style.animationDelay = `${boxDelay}s`;
+                            const formattedValue = typeof metric.value === 'number' 
+                                ? metric.value.toFixed(metric.value > 100 ? 0 : 2) 
+                                : metric.value;
+                            box.innerHTML = `
+                                <div class="value-unit">
+                                    <div class="value">${formattedValue}</div>
+                                    <div class="unit">${metric.unit}</div>
+                                </div>
+                                <div class="label">${metric.label}</div>
+                            `;
+                            metricsGrid.appendChild(box);
+                            boxDelay += 0.05; // Stagger metric boxes
+                        });
+                    }
+                    
+                    card.appendChild(metricsGrid);
+
+                    // tabulated display table below
+                    const table = document.createElement('table');
+                    table.className = 'panel-table';
+                    table.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Phase A</th>
+                                <th>Phase B</th>
+                                <th>Phase C</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Power Demand (kW)</td>
+                                <td>${panel.phase.A.powerDemand.toFixed(1)}</td>
+                                <td>${panel.phase.B.powerDemand.toFixed(1)}</td>
+                                <td>${panel.phase.C.powerDemand.toFixed(1)}</td>
+                                <td>${panel.total.powerDemand.toFixed(1)}</td>
+                            </tr>
+                            <tr>
+                                <td>Energy Consumption (kWh)</td>
+                                <td>${panel.phase.A.energy.toFixed(1)}</td>
+                                <td>${panel.phase.B.energy.toFixed(1)}</td>
+                                <td>${panel.phase.C.energy.toFixed(1)}</td>
+                                <td>${panel.total.energy.toFixed(1)}</td>
+                            </tr>
+                            <tr>
+                                <td>Voltage (V)</td>
+                                <td>${panel.phase.A.voltage.toFixed(1)}</td>
+                                <td>${panel.phase.B.voltage.toFixed(1)}</td>
+                                <td>${panel.phase.C.voltage.toFixed(1)}</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Line-to-Line Voltage (V)</td>
+                                <td>${panel.total.voltage.lineToLine.AB.toFixed(1)}</td>
+                                <td>${panel.total.voltage.lineToLine.BC.toFixed(1)}</td>
+                                <td>${panel.total.voltage.lineToLine.CA.toFixed(1)}</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Current (A)</td>
+                                <td>${panel.phase.A.current.toFixed(1)}</td>
+                                <td>${panel.phase.B.current.toFixed(1)}</td>
+                                <td>${panel.phase.C.current.toFixed(1)}</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Line-to-Line Current (A)</td>
+                                <td>${panel.total.current.lineToLine.AB.toFixed(1)}</td>
+                                <td>${panel.total.current.lineToLine.BC.toFixed(1)}</td>
+                                <td>${panel.total.current.lineToLine.CA.toFixed(1)}</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Harmonics THD (%)</td>
+                                <td>${panel.phase.A.thd.toFixed(1)}</td>
+                                <td>${panel.phase.B.thd.toFixed(1)}</td>
+                                <td>${panel.phase.C.thd.toFixed(1)}</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    `;
+                    card.appendChild(table);
+
+                    grid.appendChild(card);
+                    cardDelay += 0.2; // Stagger cards
+                });
             }
 
             /**
@@ -2761,8 +3819,9 @@
                     return;
                 }
 
+                this.activeDateRangeSource = 'overview';
                 showNotification(`Analytics updated for ${fromDate} to ${toDate}`, 'success');
-                this.renderAreaPerformance('areaPerformanceCards');
+                this.renderAreaPerformance('areaPerformanceTableBody');
             }
 
             /**
@@ -2777,6 +3836,7 @@
                     return;
                 }
 
+                this.activeDateRangeSource = 'analytics';
                 showNotification(`Analytics updated for ${fromDate} to ${toDate}`, 'success');
                 this.renderAreaPerformance('analyticsAreaPerformanceCards');
                 this.renderAnalyticsCards();
@@ -2834,9 +3894,11 @@
                 this.renderPowerConsumptionLineChart('powerConsumptionLineChart');
                 this.renderRunningTimeLineChart('runningTimeLineChart');
 
-                // Donut Charts
-                this.renderPowerRateDonutChart('powerRateDonutChart');
-                this.renderUtilizationDonutChart('utilizationDonutChart');
+                // Pie/Rate Charts
+                this.renderPowerRatePieChart('powerRatePieChart');
+                this.renderUtilizationPieChart('utilizationPieChart');
+                this.renderDowntimePieChart('downtimePieChart');
+                this.renderPeakDemandPieChart('peakDemandPieChart');
             }
 
             /**
@@ -2848,50 +3910,51 @@
 
                 const labels = this.filteredData.sections.map(s => s.name);
                 const data = this.filteredData.sections.map(s => s.total_vfds);
-                const colors = [
-                    '#3b82f6', '#10b981', '#f59e0b', '#ef4444',
-                    '#8b5cf6', '#ec4899', '#14b8a6', '#f97316'
-                ];
+                const backgroundColors = this.getVibrantPalette(data.length);
 
                 if (this.charts.pie) this.charts.pie.destroy();
 
                 this.charts.pie = new Chart(canvas, {
-                    type: 'bar',
+                    type: 'pie',
                     data: {
                         labels,
                         datasets: [{
                             label: 'VFD Count',
                             data,
-                            backgroundColor: colors.slice(0, data.length),
-                            borderColor: '#1a2236',
-                            borderWidth: 1,
-                            borderRadius: 4
+                            backgroundColor: backgroundColors,
+                            borderColor: '#0f172a',
+                            borderWidth: 2
                         }]
                     },
                     options: {
-                        indexAxis: 'y',
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
                             legend: {
+                                position: 'right',
                                 labels: {
                                     color: '#e2e8f0',
                                     font: { family: "var(--font-main)", size: 11 }
                                 }
-                            }
-                        },
-                        scales: {
-                            x: {
-                                ticks: { color: '#94a3b8' },
-                                grid: { color: '#2d3748' }
                             },
-                            y: {
-                                ticks: { color: '#94a3b8' },
-                                grid: { color: '#2d3748' }
+                            tooltip: {
+                                bodyFont: { family: "var(--font-main)" }
                             }
                         }
                     }
                 });
+            }
+
+            getVibrantPalette(count) {
+                const palette = [
+                    '#38bdf8', '#a855f7', '#f472b6', '#f97316',
+                    '#facc15', '#34d399', '#22d3ee', '#fb7185'
+                ];
+                const colors = [];
+                for (let i = 0; i < count; i++) {
+                    colors.push(palette[i % palette.length]);
+                }
+                return colors;
             }
 
             /**
@@ -3091,9 +4154,9 @@
             }
 
             /**
-             * Render power consumption rate donut chart
+             * Render power consumption rate pie chart
              */
-            renderPowerRateDonutChart(canvasId) {
+            renderPowerRatePieChart(canvasId) {
                 const canvas = document.getElementById(canvasId);
                 if (!canvas) return;
 
@@ -3107,10 +4170,7 @@
                     return section.equipment.reduce((sum, eq) => sum + (parseFloat(eq.power_rating) || 0), 0);
                 });
 
-                const colors = [
-                    '#3b82f6', '#10b981', '#f59e0b', '#ef4444',
-                    '#8b5cf6', '#ec4899', '#14b8a6', '#f97316'
-                ];
+                const backgroundColors = this.getVibrantPalette(data.length);
 
                 if (this.charts[canvasId]) this.charts[canvasId].destroy();
 
@@ -3121,22 +4181,25 @@
                         datasets: [{
                             label: 'Power Rating (HP)',
                             data,
-                            backgroundColor: colors.slice(0, data.length),
-                            borderColor: '#1a2236',
-                            borderWidth: 1,
+                            backgroundColor: backgroundColors,
+                            borderColor: '#0f172a',
+                            borderWidth: 2,
                             borderRadius: 4
                         }]
                     },
                     options: {
-                        indexAxis: 'y',
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
                             legend: {
+                                position: 'right',
                                 labels: {
                                     color: '#e2e8f0',
                                     font: { family: "var(--font-main)", size: 11 }
                                 }
+                            },
+                            tooltip: {
+                                bodyFont: { family: "var(--font-main)" }
                             }
                         }
                     }
@@ -3144,9 +4207,9 @@
             }
 
             /**
-             * Render utilization rate donut chart
+             * Render utilization rate pie chart
              */
-            renderUtilizationDonutChart(canvasId) {
+            renderUtilizationPieChart(canvasId) {
                 const canvas = document.getElementById(canvasId);
                 if (!canvas) return;
 
@@ -3160,10 +4223,7 @@
                 const labels = dataSource.sections.map(s => s.name);
                 const data = labels.map(label => performanceData[label].utilizationRate);
 
-                const colors = [
-                    '#3b82f6', '#10b981', '#f59e0b', '#ef4444',
-                    '#8b5cf6', '#ec4899', '#14b8a6', '#f97316'
-                ];
+                const backgroundColors = this.getVibrantPalette(data.length);
 
                 if (this.charts[canvasId]) this.charts[canvasId].destroy();
 
@@ -3174,22 +4234,127 @@
                         datasets: [{
                             label: 'Utilization Rate (%)',
                             data,
-                            backgroundColor: colors.slice(0, data.length),
-                            borderColor: '#1a2236',
-                            borderWidth: 1,
+                            backgroundColor: backgroundColors,
+                            borderColor: '#0f172a',
+                            borderWidth: 2,
                             borderRadius: 4
                         }]
                     },
                     options: {
-                        indexAxis: 'y',
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
                             legend: {
+                                position: 'right',
                                 labels: {
                                     color: '#e2e8f0',
                                     font: { family: "var(--font-main)", size: 11 }
                                 }
+                            },
+                            tooltip: {
+                                bodyFont: { family: "var(--font-main)" }
+                            }
+                        }
+                    }
+                });
+            }
+
+            /**
+             * Render downtime rate pie chart
+             */
+            renderDowntimePieChart(canvasId) {
+                const canvas = document.getElementById(canvasId);
+                if (!canvas) return;
+
+                const isAnalytics = canvasId.includes('analytics');
+                const dataSource = isAnalytics ? this.data : this.filteredData;
+                if (!dataSource) return;
+
+                const performanceData = this.generateAreaPerformanceData();
+                const labels = dataSource.sections.map(s => s.name);
+                const data = labels.map(label => performanceData[label].downtime);
+
+                const backgroundColors = this.getVibrantPalette(data.length);
+
+                if (this.charts[canvasId]) this.charts[canvasId].destroy();
+
+                this.charts[canvasId] = new Chart(canvas, {
+                    type: 'pie',
+                    data: {
+                        labels,
+                        datasets: [{
+                            label: 'Downtime (hrs)',
+                            data,
+                            backgroundColor: backgroundColors,
+                            borderColor: '#0f172a',
+                            borderWidth: 2,
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                                labels: {
+                                    color: '#e2e8f0',
+                                    font: { family: "var(--font-main)", size: 11 }
+                                }
+                            },
+                            tooltip: {
+                                bodyFont: { family: "var(--font-main)" }
+                            }
+                        }
+                    }
+                });
+            }
+
+            /**
+             * Render peak demand rate pie chart
+             */
+            renderPeakDemandPieChart(canvasId) {
+                const canvas = document.getElementById(canvasId);
+                if (!canvas) return;
+
+                const isAnalytics = canvasId.includes('analytics');
+                const dataSource = isAnalytics ? this.data : this.filteredData;
+                if (!dataSource) return;
+
+                const performanceData = this.generateAreaPerformanceData();
+                const labels = dataSource.sections.map(s => s.name);
+                const data = labels.map(label => performanceData[label].peakDemand);
+
+                const backgroundColors = this.getVibrantPalette(data.length);
+
+                if (this.charts[canvasId]) this.charts[canvasId].destroy();
+
+                this.charts[canvasId] = new Chart(canvas, {
+                    type: 'pie',
+                    data: {
+                        labels,
+                        datasets: [{
+                            label: 'Peak Demand (kW)',
+                            data,
+                            backgroundColor: backgroundColors,
+                            borderColor: '#0f172a',
+                            borderWidth: 2,
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                                labels: {
+                                    color: '#e2e8f0',
+                                    font: { family: "var(--font-main)", size: 11 }
+                                }
+                            },
+                            tooltip: {
+                                bodyFont: { family: "var(--font-main)" }
                             }
                         }
                     }
@@ -3246,74 +4411,361 @@
             }
 
             /**
+             * Get selected date range for equipment metrics
+             */
+            getEquipmentDateRange() {
+                const overviewFrom = document.getElementById('overviewFromDate')?.value;
+                const overviewTo = document.getElementById('overviewToDate')?.value;
+                const analyticsFrom = document.getElementById('analyticsFromDate')?.value;
+                const analyticsTo = document.getElementById('analyticsToDate')?.value;
+
+                const useAnalyticsRange = this.activeDateRangeSource === 'analytics';
+                const primaryFrom = useAnalyticsRange ? analyticsFrom : overviewFrom;
+                const primaryTo = useAnalyticsRange ? analyticsTo : overviewTo;
+                const fallbackFrom = useAnalyticsRange ? overviewFrom : analyticsFrom;
+                const fallbackTo = useAnalyticsRange ? overviewTo : analyticsTo;
+                const fromDateValue = primaryFrom || fallbackFrom;
+                const toDateValue = primaryTo || fallbackTo;
+
+                const now = new Date();
+                const defaultStart = new Date(now.getTime() - (30 * 24 * 60 * 60 * 1000));
+
+                let startDate = fromDateValue ? new Date(`${fromDateValue}T00:00:00`) : defaultStart;
+                let endDate = toDateValue ? new Date(`${toDateValue}T23:59:59`) : now;
+
+                if (Number.isNaN(startDate.getTime())) startDate = defaultStart;
+                if (Number.isNaN(endDate.getTime())) endDate = now;
+
+                if (startDate > endDate) {
+                    const swapDate = startDate;
+                    startDate = endDate;
+                    endDate = swapDate;
+                }
+
+                const msPerDay = 24 * 60 * 60 * 1000;
+                const totalDays = Math.max(1, Math.floor((endDate.getTime() - startDate.getTime()) / msPerDay) + 1);
+
+                return { startDate, endDate, totalDays };
+            }
+
+            /**
+             * Generate deterministic hash from a string
+             */
+            hashString(value) {
+                let hash = 0;
+                for (let i = 0; i < value.length; i++) {
+                    hash = ((hash << 5) - hash) + value.charCodeAt(i);
+                    hash |= 0;
+                }
+                return Math.abs(hash);
+            }
+
+            /**
+             * Generate deterministic pseudo-random value between 0 and 1
+             */
+            seededUnit(seed, salt = 0) {
+                const raw = Math.sin((seed + 1) * 12.9898 + salt * 78.233) * 43758.5453;
+                return raw - Math.floor(raw);
+            }
+
+            /**
+             * Format metric value for table display
+             */
+            formatMetricValue(value, digits = 1) {
+                return Number(value).toLocaleString(undefined, {
+                    minimumFractionDigits: digits,
+                    maximumFractionDigits: digits
+                });
+            }
+
+            /**
+             * Format date/time for fault history display
+             */
+            formatDateTime(dateObj) {
+                const year = dateObj.getFullYear();
+                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const day = String(dateObj.getDate()).padStart(2, '0');
+                const hours = String(dateObj.getHours()).padStart(2, '0');
+                const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+                return `${year}-${month}-${day} ${hours}:${minutes}`;
+            }
+
+            /**
+             * Build deterministic fault history within selected date range
+             */
+            generateEquipmentFaultHistory(equipmentId, dateRange, seed) {
+                const faultTypes = [
+                    'Overcurrent',
+                    'Overvoltage',
+                    'Undervoltage',
+                    'Overtemperature',
+                    'Communication Loss',
+                    'Phase Loss',
+                    'Drive Overload'
+                ];
+
+                const baseFaults = Math.floor(this.seededUnit(seed, 91) * 3);
+                const rangeBonus = Math.floor(dateRange.totalDays / 30);
+                const faultCount = Math.min(6, baseFaults + rangeBonus);
+                const faults = [];
+
+                for (let i = 0; i < faultCount; i++) {
+                    const typeIndex = Math.floor(this.seededUnit(seed, 200 + i) * faultTypes.length);
+                    const dayOffset = Math.floor(this.seededUnit(seed, 300 + i) * dateRange.totalDays);
+                    const minuteOffset = Math.floor(this.seededUnit(seed, 400 + i) * 1440);
+                    const timestamp = new Date(dateRange.startDate.getTime() + ((dayOffset * 1440) + minuteOffset) * 60000);
+                    const durationMinutes = 10 + Math.floor(this.seededUnit(seed, 500 + i) * 171);
+
+                    faults.push({
+                        equipmentId,
+                        time: timestamp > dateRange.endDate ? new Date(dateRange.endDate) : timestamp,
+                        faultType: faultTypes[typeIndex],
+                        durationMinutes
+                    });
+                }
+
+                return faults.sort((a, b) => b.time - a.time);
+            }
+
+            /**
+             * Calculate equipment metrics within selected date range
+             */
+            calculateEquipmentMetrics(equipment, sectionName, dateRange) {
+                const powerHp = parseFloat(equipment.power_rating) || 10;
+                const ratedVoltage = parseFloat(equipment.voltage) || 380;
+                const dateSeed = `${dateRange.startDate.toISOString().slice(0, 10)}|${dateRange.endDate.toISOString().slice(0, 10)}`;
+                const seed = this.hashString(`${equipment.equipment_id}|${sectionName}|${dateSeed}`);
+
+                const totalHours = dateRange.totalDays * 24;
+                const baselineUtilization = Math.round(18 + (this.seededUnit(seed, 10) * 74));
+                const faults = this.generateEquipmentFaultHistory(equipment.equipment_id, dateRange, seed);
+                const totalDowntimeMinutes = faults.reduce((sum, fault) => sum + fault.durationMinutes, 0);
+                const statusRoll = this.seededUnit(seed, 75);
+
+                let status = 'running';
+                if (statusRoll < 0.14 || baselineUtilization < 25) {
+                    status = 'offline';
+                } else if (statusRoll < 0.34 || (faults.length > 0 && totalDowntimeMinutes > 180)) {
+                    status = 'fault';
+                } else if (statusRoll < 0.58 || baselineUtilization < 55) {
+                    status = 'idle';
+                }
+
+                let runningTimeHours;
+                if (status === 'offline') {
+                    runningTimeHours = totalHours * (0.04 + (this.seededUnit(seed, 83) * 0.08));
+                } else if (status === 'fault') {
+                    runningTimeHours = totalHours * (0.22 + (this.seededUnit(seed, 84) * 0.20));
+                } else if (status === 'idle') {
+                    runningTimeHours = totalHours * (0.38 + (this.seededUnit(seed, 85) * 0.18));
+                } else {
+                    runningTimeHours = totalHours * (0.62 + (this.seededUnit(seed, 86) * 0.30));
+                }
+
+                const utilizationRate = Math.round((runningTimeHours / totalHours) * 100);
+                const powerKw = powerHp * 0.746;
+                const loadFactor = 0.68 + (this.seededUnit(seed, 20) * 0.24);
+                const powerConsumptionKwh = runningTimeHours * powerKw * loadFactor;
+                const peakDemandKw = powerKw * (1.05 + (this.seededUnit(seed, 30) * 0.55));
+                const averageVoltage = ratedVoltage * (0.96 + (this.seededUnit(seed, 40) * 0.08));
+                const powerFactor = 0.82 + (this.seededUnit(seed, 50) * 0.14);
+                const averageCurrent = (powerKw * 1000) / (Math.sqrt(3) * averageVoltage * powerFactor);
+                const averageFrequency = 50 + ((this.seededUnit(seed, 60) - 0.5) * 3);
+
+                return {
+                    status,
+                    runningTimeHours,
+                    utilizationRate,
+                    powerConsumptionKwh,
+                    peakDemandKw,
+                    averageCurrent,
+                    averageVoltage,
+                    averageFrequency,
+                    faults,
+                    totalDowntimeMinutes
+                };
+            }
+
+            /**
+             * Build downtime cell content with fault history
+             */
+            buildDowntimeCell(equipment, sectionName, totalDowntimeMinutes) {
+                const equipmentArg = JSON.stringify(equipment).replace(/"/g, '&quot;');
+                const sectionArg = JSON.stringify(sectionName).replace(/"/g, '&quot;');
+
+                return `
+                    <div class="downtime-content">
+                        <span class="downtime-total">${this.formatMetricValue(totalDowntimeMinutes / 60, 1)} Hr</span>
+                        <button class="btn downtime-history-btn" onclick="dashboard.showDowntimeHistory(${equipmentArg}, ${sectionArg})">
+                            History
+                        </button>
+                    </div>
+                `;
+            }
+
+            /**
+             * Build a single equipment table row
+             */
+            buildEquipmentRow(equipment, sectionName, dateRange) {
+                const metrics = this.calculateEquipmentMetrics(equipment, sectionName, dateRange);
+                const statusStyleMap = {
+                    running: { className: 'tag-success', icon: 'fa-play-circle' },
+                    idle: { className: 'tag-warning', icon: 'fa-pause-circle' },
+                    fault: { className: 'tag-danger', icon: 'fa-exclamation-triangle' },
+                    offline: { className: 'tag-danger', icon: 'fa-power-off' }
+                };
+                const statusStyle = statusStyleMap[metrics.status] || statusStyleMap.offline;
+                const downtimeHtml = this.buildDowntimeCell(equipment, sectionName, metrics.totalDowntimeMinutes);
+                const equipmentArg = JSON.stringify(equipment).replace(/"/g, '&quot;');
+                const sectionArg = JSON.stringify(sectionName).replace(/"/g, '&quot;');
+
+                return `
+                    <tr>
+                        <td class="equipment-name-cell">
+                            <strong>${equipment.equipment_id}</strong>
+                        </td>
+                        <td><span class="tag tag-primary">${sectionName}</span></td>
+                        <td>
+                            <span class="tag ${statusStyle.className}">
+                                <i class="fas ${statusStyle.icon}"></i>
+                                ${metrics.status}
+                            </span>
+                        </td>
+                        <td class="metric-cell">${this.formatMetricValue(metrics.runningTimeHours)} h</td>
+                        <td class="metric-cell">${metrics.utilizationRate}%</td>
+                        <td class="metric-cell">${this.formatMetricValue(metrics.powerConsumptionKwh)} kWh</td>
+                        <td class="metric-cell">${this.formatMetricValue(metrics.peakDemandKw)} kW</td>
+                        <td class="metric-cell">${this.formatMetricValue(metrics.averageCurrent)} A</td>
+                        <td class="metric-cell">${this.formatMetricValue(metrics.averageVoltage)} V</td>
+                        <td class="metric-cell">${this.formatMetricValue(metrics.averageFrequency, 2)} Hz</td>
+                        <td class="downtime-cell">${downtimeHtml}</td>
+                        <td>
+                            <button class="btn" style="padding: 0.5rem 1rem;" 
+                                onclick="dashboard.showEquipmentDetails(${equipmentArg}, ${sectionArg})">
+                                View
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }
+
+            /**
+             * Show downtime history modal for selected equipment
+             */
+            showDowntimeHistory(equipment, sectionName) {
+                const modal = document.getElementById('detailsModal');
+                const title = document.getElementById('detailsModalTitle');
+                const body = document.getElementById('detailsModalBody');
+                if (!modal || !title || !body) return;
+
+                const dateRange = this.getEquipmentDateRange();
+                const metrics = this.calculateEquipmentMetrics(equipment, sectionName, dateRange);
+                const startDateLabel = dateRange.startDate.toISOString().slice(0, 10);
+                const endDateLabel = dateRange.endDate.toISOString().slice(0, 10);
+                const totalDowntimeHours = metrics.totalDowntimeMinutes / 60;
+
+                const historyRows = metrics.faults.length
+                    ? metrics.faults.map(fault => `
+                        <tr>
+                            <td>${this.formatDateTime(fault.time)}</td>
+                            <td>${fault.faultType}</td>
+                            <td>${fault.durationMinutes} min</td>
+                        </tr>
+                    `).join('')
+                    : '<tr><td colspan="3" style="text-align: center; color: var(--color-text-secondary);">No fault history in selected range</td></tr>';
+
+                title.textContent = `${equipment.equipment_id} - Downtime History`;
+                body.innerHTML = `
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-lg); margin-bottom: var(--space-lg);">
+                        <div>
+                            <div style="font-size: 0.75rem; color: var(--color-text-secondary); text-transform: uppercase; margin-bottom: var(--space-xs);">Date Range</div>
+                            <div style="font-weight: 600;">${startDateLabel} to ${endDateLabel}</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.75rem; color: var(--color-text-secondary); text-transform: uppercase; margin-bottom: var(--space-xs);">Total Downtime</div>
+                            <div style="font-weight: 700; color: var(--color-warning);">${this.formatMetricValue(totalDowntimeHours, 1)} Hr</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.75rem; color: var(--color-text-secondary); text-transform: uppercase; margin-bottom: var(--space-xs);">Fault Count</div>
+                            <div style="font-weight: 600;">${metrics.faults.length}</div>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Fault Type</th>
+                                    <th>Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${historyRows}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+
+                modal.classList.add('active');
+            }
+
+            /**
+             * Render equipment rows with search and area filters
+             */
+            renderEquipmentRows(searchTerm = '', selectedArea = '') {
+                const tbody = document.getElementById('equipmentTableBody');
+                const counter = document.getElementById('equipmentCount');
+                if (!tbody || !counter) return;
+
+                const dateRange = this.getEquipmentDateRange();
+                const normalizedSearch = searchTerm.toLowerCase();
+                let count = 0;
+                let html = '';
+
+                this.data.sections.forEach(section => {
+                    if (selectedArea && section.name !== selectedArea) return;
+
+                    section.equipment.forEach(equipment => {
+                        const matchesSearch = !normalizedSearch ||
+                            equipment.equipment_id.toLowerCase().includes(normalizedSearch) ||
+                            equipment.equipment_name.toLowerCase().includes(normalizedSearch) ||
+                            equipment.vfd_brand_model.toLowerCase().includes(normalizedSearch);
+
+                        if (!matchesSearch) return;
+
+                        count++;
+                        html += this.buildEquipmentRow(equipment, section.name, dateRange);
+                    });
+                });
+
+                tbody.innerHTML = html || '<tr><td colspan="12" style="text-align: center; padding: 2rem;">No equipment found</td></tr>';
+                counter.textContent = count;
+            }
+
+            /**
              * Render equipment page
              */
             renderEquipment() {
                 if (!this.data) return;
 
-                // Populate area filter
                 const areaFilter = document.getElementById('equipmentAreaFilter');
                 if (areaFilter) {
+                    const previousValue = areaFilter.value;
                     const options = '<option value="">All Areas</option>' +
-                        this.data.sections.map(s =>
-                            `<option value="${s.name}">${s.name}</option>`
+                        this.data.sections.map(section =>
+                            `<option value="${section.name}">${section.name}</option>`
                         ).join('');
                     areaFilter.innerHTML = options;
+
+                    if (previousValue && this.data.sections.some(section => section.name === previousValue)) {
+                        areaFilter.value = previousValue;
+                    }
                 }
 
-                const tbody = document.getElementById('equipmentTableBody');
-                const counter = document.getElementById('equipmentCount');
-
-                let count = 0;
-                let html = '';
-
-                this.data.sections.forEach(section => {
-                    section.equipment.forEach(eq => {
-                        count++;
-                        // Generate equipment status
-                        const isRunning = Math.random() > 0.3;
-                        const isConnected = Math.random() > 0.1;
-                        const hasFault = Math.random() > 0.85;
-
-                        html += `
-                            <tr>
-                                <td><strong>${eq.equipment_id}</strong></td>
-                                <td>${eq.equipment_name}</td>
-                                <td>${eq.power_rating || 'N/A'}</td>
-                                <td>${eq.voltage || 'N/A'}</td>
-                                <td><span class="tag tag-primary">${eq.vfd_brand_model}</span></td>
-                                <td><span class="tag tag-success">${section.name}</span></td>
-                                <td>
-                                    <span class="tag ${isRunning ? 'tag-success' : 'tag-warning'}">
-                                        <i class="fas ${isRunning ? 'fa-play-circle' : 'fa-pause-circle'}"></i>
-                                        ${isRunning ? 'Running' : 'Idle'}
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="tag ${isConnected ? 'tag-success' : 'tag-danger'}">
-                                        <i class="fas ${isConnected ? 'fa-link' : 'fa-unlink'}"></i>
-                                        ${isConnected ? 'Connected' : 'Offline'}
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="tag ${hasFault ? 'tag-danger' : 'tag-success'}">
-                                        <i class="fas ${hasFault ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i>
-                                        ${hasFault ? 'Fault' : 'Healthy'}
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="btn" style="padding: 0.5rem 1rem;" 
-                                        onclick="dashboard.showEquipmentDetails(${JSON.stringify(eq).replace(/"/g, '&quot;')}, '${section.name}')">
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
-                    });
-                });
-
-                tbody.innerHTML = html || '<tr><td colspan="10" style="text-align: center; padding: 2rem;">No equipment found</td></tr>';
-                counter.textContent = count;
+                const searchTerm = document.getElementById('equipmentSearch')?.value || '';
+                const selectedArea = document.getElementById('equipmentAreaFilter')?.value || '';
+                this.renderEquipmentRows(searchTerm, selectedArea);
             }
 
             /**
@@ -3322,71 +4774,9 @@
             filterEquipment() {
                 if (!this.data) return;
 
-                const searchTerm = document.getElementById('equipmentSearch')?.value.toLowerCase() || '';
+                const searchTerm = document.getElementById('equipmentSearch')?.value || '';
                 const selectedArea = document.getElementById('equipmentAreaFilter')?.value || '';
-
-                const tbody = document.getElementById('equipmentTableBody');
-                const counter = document.getElementById('equipmentCount');
-
-                let count = 0;
-                let html = '';
-
-                this.data.sections.forEach(section => {
-                    if (selectedArea && section.name !== selectedArea) return;
-
-                    section.equipment.forEach(eq => {
-                        const matchesSearch = !searchTerm || 
-                            eq.equipment_id.toLowerCase().includes(searchTerm) ||
-                            eq.equipment_name.toLowerCase().includes(searchTerm) ||
-                            eq.vfd_brand_model.toLowerCase().includes(searchTerm);
-
-                        if (matchesSearch) {
-                            count++;
-                            // Generate equipment status
-                            const isRunning = Math.random() > 0.3;
-                            const isConnected = Math.random() > 0.1;
-                            const hasFault = Math.random() > 0.85;
-
-                            html += `
-                                <tr>
-                                    <td><strong>${eq.equipment_id}</strong></td>
-                                    <td>${eq.equipment_name}</td>
-                                    <td>${eq.power_rating || 'N/A'}</td>
-                                    <td>${eq.voltage || 'N/A'}</td>
-                                    <td><span class="tag tag-primary">${eq.vfd_brand_model}</span></td>
-                                    <td><span class="tag tag-success">${section.name}</span></td>
-                                    <td>
-                                        <span class="tag ${isRunning ? 'tag-success' : 'tag-warning'}">
-                                            <i class="fas ${isRunning ? 'fa-play-circle' : 'fa-pause-circle'}"></i>
-                                            ${isRunning ? 'Running' : 'Idle'}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="tag ${isConnected ? 'tag-success' : 'tag-danger'}">
-                                            <i class="fas ${isConnected ? 'fa-link' : 'fa-unlink'}"></i>
-                                            ${isConnected ? 'Connected' : 'Offline'}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="tag ${hasFault ? 'tag-danger' : 'tag-success'}">
-                                            <i class="fas ${hasFault ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i>
-                                            ${hasFault ? 'Fault' : 'Healthy'}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <button class="btn" style="padding: 0.5rem 1rem;" 
-                                            onclick="dashboard.showEquipmentDetails(${JSON.stringify(eq).replace(/"/g, '&quot;')}, '${section.name}')">
-                                            View
-                                        </button>
-                                    </td>
-                                </tr>
-                            `;
-                        }
-                    });
-                });
-
-                tbody.innerHTML = html || '<tr><td colspan="10" style="text-align: center; padding: 2rem;">No equipment found</td></tr>';
-                counter.textContent = count;
+                this.renderEquipmentRows(searchTerm, selectedArea);
             }
 
             /**
@@ -4065,6 +5455,18 @@
             }
 
             /**
+             * Update area history charts
+             */
+            updateAreaHistory(sectionName) {
+                const section = this.filteredData.sections.find(s => s.name === sectionName);
+                if (section) {
+                    this.renderAreaRunningTimeChart(section);
+                    this.renderAreaPowerConsumptionChart(section);
+                    this.renderAreaFrequencyChart(section);
+                }
+            }
+
+            /**
              * Render interactive map
              */
             renderMap() {
@@ -4344,31 +5746,6 @@
                 if (equipment) {
                     this.showEquipmentDetails(equipment, area);
                 }
-            }
-
-            /**
-             * Export data to CSV
-             */
-            exportData() {
-                if (!this.data) return;
-
-                let csv = 'Equipment ID,Name,Power Rating,Voltage,VFD Model,Area,Details\n';
-
-                this.data.sections.forEach(section => {
-                    section.equipment.forEach(eq => {
-                        csv += `"${eq.equipment_id}","${eq.equipment_name}","${eq.power_rating || 'N/A'}","${eq.voltage || 'N/A'}","${eq.vfd_brand_model}","${section.name}","${eq.equipment_details}"\n`;
-                    });
-                });
-
-                const blob = new Blob([csv], { type: 'text/csv' });
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `scada_data_${new Date().toISOString().split('T')[0]}.csv`;
-                a.click();
-                window.URL.revokeObjectURL(url);
-
-                showNotification('Data exported successfully', 'success');
             }
 
             /**
